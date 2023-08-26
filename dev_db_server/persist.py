@@ -18,7 +18,7 @@ def load():
         threading.Thread(target=Users.watch).start()
         print("Loading Finished")
 
-    except FileNotFoundError as e:
+    except (FileNotFoundError, EOFError) as e:
         print(f"Loading Error: {e}")
 
 
@@ -39,5 +39,3 @@ def load_t():
 
 def save_t():
     threading.Thread(target=save).start()
-
-
