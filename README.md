@@ -1,183 +1,43 @@
-# Dev DB
+# dev_db: Temporary Dummy Database REST API Server
 
-Data can only be saved for 5 hours.
+**dev_db** is a project designed to provide developers with a functional dummy database REST API server. This server enables developers to perform various database-related actions through its API endpoints. It's particularly useful during the development phase when developers want to test and experiment with REST API calls before integrating their final chosen database platform.
 
-## Endpoints and HTTP Methods
+## Features
 
-- If error in the response is true, then the message and code is found in the error_response.
-- All timestamps are in seconds.
+- **User Account Management:** Developers can create user accounts and receive API keys for authorization.
+- **Database Management:** Users with valid API keys can create databases that remain active for 5 hours. After this period, the database will be automatically deleted.
+- **Data Interaction:** Developers can interact with databases by retrieving and modifying data.
 
-- /create_user?identifier=<identifier>
-    - GET
-        - response {
-            message: User created successfully,
-            identifier: new desired user identifier,
-            api_key: server generated key, keep safe,
-            code: created_user,
-            error: bool,
-        }
-        - error_response
-            - identifier_exists {
-                message: given identifier already exists,
-                code: identifier_exists,
-            }
-            - identifier_too_long {
-                message: given identifier is too long, valid length for an identifier is 20,
-                code: identifier_too_long,
-            }
+## Getting Started
 
-- /get_user
-    - POST
-        - request {
-            api_key: user's api_key,
-            identifier: user's identifier,
-        }
-        - response {
-            identifier: new desired user identifier,
-            api_key: server generated key, keep safe,
-            database_details: {
-                database_name: {
-                    name: name of the database,
-                    description: description of the database,
-                    created_timestamp: int,
-                    expiration_timestamp: int,
-                    remaining_timestamp: int,
-                },
-            }
-        }
-        - error_response {
-            - invalid_identifier_or_api_key {
-                message: provided identifier or api_key in path is invalid,
-                code: invalid_identifier_or_api_key,
-            }
-        }
+To use **dev_db** in your project, follow these steps:
 
-- /create_database
-    - POST
-        - request {
-            api_key: user's api_key,
-            identifier: user's identifier,
-            name: name of the new database,
-            description: description of database,
-            created_timestamp: int,
-            expiration_timestamp: int,
-            remaining_timestamp: int,
-        }
-        - response {
-            message: database created successfully,
-            error: bool,
-            code: created_database,
-            name: new database name,
-        }
-        - error_response
-            - database_already_exists {
-                message: given name for database already exists,
-                code: database_already_exists,
-            }
-            - invalid_identifier_or_api_key {
-                message: provided identifier or api_key in path is invalid,
-                code: invalid_identifier_or_api_key,
-            }
+1. **User Account Creation:**  Make GET request to the the API [/create_user](link-to-online-enpoint.com/create_user) to create a user account and obtain an API key.
+2. **Database Operations:** Use the provided API endpoints to create, delete, and interact with databases.
+3. **Data Interaction:** Fetch and modify data within the databases.
 
-- /delete_database
-    - POST
-        - request {
-            api_key: user's api_key,
-            identifier: user's identifier,
-            database_name: name of the new database,
-        }
-        - response {
-            message: database deleted successfully,
-            code: deleted_database,
-            error: bool,
-            name: database name,
-        }
-        - error_response
-            - database_non_exist {
-                message: given identifier non exists,
-                code: database_non_exist,
-            }
-            - invalid_identifier_or_api_key {
-                message: provided identifier or api_key in path is invalid,
-                code: invalid_identifier_or_api_key,
-            }
+## API Endpoints
 
-- /get_data
-    - POST
-        - to get a data
-        - request {
-            api_key: user's api_key,
-            identifier: user's identifier,
-            path: database_name/child/another_child,
-        }
-        - response {
-            message: path foun and data returned,
-            code: get_made,
-            error: bool,
-            path: path to data,
-            data: {},
-            remaining_timestamp: int,
-        }
-        - error_response {
-            - invalid_identifier_or_api_key {
-                message: provided identifier or api_key in path is invalid,
-                code: invalid_identifier_or_api_key,
-            }
-            - invalid_path {
-                message: provided path does not exist in database,
-                code: invalid_path,
-            }
-        }
+Here are the main API endpoints provided by **dev_db**:
 
-- /set_data
-    - POST
-        - to get a data
-        - request {
-            api_key: user's api_key,
-            identifier: user's identifier,
-            path: database_name/child/another_child,
-            data: data,
-        }
-        - response {
-            path: path to data,
-            remaining_timestamp: int,
-            message: data set successfully,
-            code: set_made,
-            error:bool,
-        }
-        - error_response {
-            - invalid_identifier_or_api_key {
-                message: provided identifier or api_key in path is invalid,
-                code: invalid_identifier_or_api_key,
-            }
-            - invalid_path {
-                message: provided path does not exist in database,
-                code: invalid_path,
-            }
-        }
+- `GET /create_user?identifier={identifier}`: Create a user account and receive an API key for authorization.
+- `POST /get_user`: Get the details of a user account.
+- `POST /create_database`: Create a new database using a valid API key.
+- `POST /delete_database`: Delete a database by providing its ID and a valid API key.
+- `POST /get_data`: Retrieve data from a specific database of the user using a valid API key.
+- `POST /set_data`: Modify data within a specific database of the user using a valid API key.
+- `POST /delete_data`: Delete data within a specific database of the user using a valid API key.
 
-- /delete_data
-    - POST
-        - to delete a data
-        - request {
-            api_key: user's api_key,
-            identifier: user's identifier,
-            path: database_name/child/another_child,
-        }
-        - response {
-            path: path to data,
-            message: data deleted successfully,
-            code: delete_made,
-            error:bool,
+For detailed usage instructions and examples for each endpoint, refer to the [API Documentation](api-documentation.md) file.
 
-        }
-        - error_response {
-            - invalid_identifier_or_api_key {
-                message: provided identifier or api_key in path is invalid,
-                code: invalid_identifier_or_api_key,
-            }
-            - invalid_path {
-                message: provided path does not exist in database,
-                code: invalid_path,
-            }
-        }
+## Contributing
+
+Contributions are welcome! If you'd like to contribute to the project, please follow the guidelines outlined in [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Contact
+
+For any questions or inquiries, feel free to contact us at [prmpsmart@gmail.com](mailto:prmpsmart@gmail.com).
