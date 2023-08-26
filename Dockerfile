@@ -11,4 +11,4 @@ COPY . .
 # Expose port 8000 for the application
 EXPOSE 8000
 # Start the application using uvicorn with the specified host and port
-CMD ["uvicorn", "router.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "dev_db_server:dev_db_app", "--host", "0.0.0.0", "--port", "8000"]
