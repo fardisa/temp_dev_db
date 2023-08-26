@@ -40,4 +40,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Contact
 
-For any questions or inquiries, feel free to contact us at [prmpsmart@gmail.com](mailto:prmpsmart@gmail.com).
+For any questions or inquiries, feel free to contact me at [prmpsmart@gmail.com](mailto:prmpsmart@gmail.com).
