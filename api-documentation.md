@@ -2,7 +2,7 @@
 
 Data can only be saved for 5 hours. This is where all the rough work was done.
 
-> Access the Swagger UI on [link-to-online-enpoint.com](link-to-online-enpoint.com/docs)
+> Access the Swagger UI on [Swagger UI](https://devdb-prmpsmart.b4a.run/docs) for full API documentation.
 
 ## Endpoints and HTTP Methods
 

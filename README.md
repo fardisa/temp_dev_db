@@ -12,7 +12,7 @@
 
 To use **dev_db** in your project, follow these steps:
 
-1. **User Account Creation:**  Make GET request to the the API [/create_user](link-to-online-enpoint.com/create_user) to create a user account and obtain an API key.
+1. **User Account Creation:**  Make GET request to the the API [/create_user](https://devdb-prmpsmart.b4a.run/create_user) to create a user account and obtain an API key.
 2. **Database Operations:** Use the provided API endpoints to create, delete, and interact with databases.
 3. **Data Interaction:** Fetch and modify data within the databases.
 
