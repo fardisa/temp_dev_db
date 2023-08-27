@@ -46,12 +46,17 @@ class CreateUserResponse(Response):
     api_key: str
 
 
-class GetUserResponse(Response):
+class GetUserResponse(CreateUserResponse):
     database_details: dict[str, DatabaseDetail]
 
 
+class Mockup(BaseModel):
+    database_details: dict[str, DatabaseDetail]
+    identifier: str
+
+
 class GetUsersResponse(Response):
-    mockups: list[DatabaseDetail]
+    mockups: list[Mockup]
 
 
 class SetDataResponse(Response):

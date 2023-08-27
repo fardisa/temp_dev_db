@@ -16,9 +16,16 @@ def create_user(identifier: str) -> Union[CreateUserResponse, Response]:
     return Users.create_user(identifier)
 
 
+@dev_db_app.post("/delete_user", status_code=200)
+def delete_user(user_request: UserRequest) -> Response:
+    return Users.delete_user(
+        user_request.identifier,
+        user_request.api_key,
+    )
+
+
 @dev_db_app.post("/get_user", status_code=200)
 def get_user(user_request: UserRequest) -> Union[GetUserResponse, Response]:
-    print(user_request)
     return Users.get_user(
         user_request.identifier,
         user_request.api_key,

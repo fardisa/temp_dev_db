@@ -257,6 +257,31 @@ class Users:
             return user_by_api_key
 
     @classmethod
+    def delete_user(cls, identifier: str, api_key: str):
+        response = Json(error=True)
+        user: Union[User, None] = cls.__get_user(identifier, api_key)
+
+        if cls.is_user(user):
+            del cls.users_by_api_key[user.api_key]
+            del cls.users_by_identifier[user.identifier]
+
+            save_t()
+
+            response.update(
+                error=False,
+                message="user is deleted",
+                code="delete_made",
+            )
+
+        else:
+            response.update(
+                message=f"provided identifier: `{identifier}` or api_key in path is invalid",
+                code="invalid_identifier_or_api_key",
+            )
+
+        return response
+
+    @classmethod
     def get_user(cls, identifier: str, api_key: str):
         response = Json(error=True)
         user: Union[User, None] = cls.__get_user(identifier, api_key)

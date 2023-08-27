@@ -22,7 +22,7 @@ class User:
             **kwargs,
         )
 
-        if response.status_code==200:
+        if response.status_code == 200:
             json = response.json(object_hook=Json)
             return response_class(json)
         else:
@@ -80,6 +80,9 @@ class User:
 
     def get_user(self) -> GetUserResponse:
         return self.post("get_user", GetUserResponse)
+
+    def delete_user(self) -> GetUserResponse:
+        return self.post("delete_user", Response)
 
     def create_database(
         self,
