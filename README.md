@@ -21,6 +21,7 @@ To use **dev_db** in your project, follow these steps:
 Here are the main API endpoints provided by **dev_db**:
 
 - `GET /create_user?identifier={identifier}`: Create a user account and receive an API key for authorization.
+- `POST /delete_user`: Delete a user account.
 - `POST /get_user`: Get the details of a user account.
 - `POST /create_database`: Create a new database using a valid API key.
 - `POST /delete_database`: Delete a database by providing its ID and a valid API key.

@@ -28,6 +28,23 @@ Data can only be saved for 5 hours. This is where all the rough work was done.
                 code: identifier_too_long,
             }
 
+- /delete_user
+    - POST
+        - request {
+            api_key: user's api_key,
+            identifier: user's identifier,
+        }
+        - response {
+            message: user deleted successfully,
+            code: delete_made_,
+            error: bool,
+        }
+        - error_response
+            - invalid_identifier_or_api_key {
+                message: provided identifier or api_key in path is invalid,
+                code: invalid_identifier_or_api_key,
+            }
+
 - /get_user
     - POST
         - request {
