@@ -4,7 +4,7 @@ from typing import Any, Union
 
 
 DATABASE_TIMEOUT = 5 * 60 * 60
-DATABASE_TIMEOUT = 300
+# DATABASE_TIMEOUT = 300
 
 
 def NOW():
@@ -45,7 +45,7 @@ class Path:
         self.child: Union[Path, None] = Path(children) if children else None
 
     def __str__(self) -> str:
-        return f'{self.__class__.__name__}(raw_path={self.raw_path})'
+        return f"{self.__class__.__name__}(raw_path={self.raw_path})"
 
     @classmethod
     def get_path(cls, path: str) -> Union["Path", None]:

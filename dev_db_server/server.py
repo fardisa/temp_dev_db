@@ -12,32 +12,34 @@ dev_db_app = FastAPI(
 
 
 @dev_db_app.get("/create_user", status_code=200)
-def create_user(
-    identifier: str,
-) -> Union[CreateUserResponse, Response]:
+def create_user(identifier: str) -> Union[CreateUserResponse, Response]:
     return Users.create_user(identifier)
 
 
 @dev_db_app.post("/get_user", status_code=200)
 def get_user(user_request: UserRequest) -> Union[GetUserResponse, Response]:
+    print(user_request)
     return Users.get_user(
         user_request.identifier,
         user_request.api_key,
     )
 
 
+@dev_db_app.get("/get_users", status_code=200)
+def get_users(identifier: str) -> Union[GetUsersResponse, Response]:
+    return Users.get_users(identifier)
+
+
 @dev_db_app.post("/create_database", status_code=200)
 def create_database(
     create_database_request: CreateDatabaseRequest,
 ) -> Union[CreateDatabaseResponse, Response]:
-    retur = Users.create_database(
+    return Users.create_database(
         create_database_request.identifier,
         create_database_request.api_key,
         create_database_request.name,
         create_database_request.description,
     )
-    print(retur)
-    return retur
 
 
 @dev_db_app.post("/delete_database", status_code=200)

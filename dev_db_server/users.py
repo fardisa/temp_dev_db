@@ -1,11 +1,15 @@
-import hashlib, uuid, time
+import hashlib, time
 from .database import Json, Path, Any, Union, Database, save_t
 
 
 class User:
     def __init__(self, identifier: str) -> None:
         self.identifier = identifier
-        self.api_key = hashlib.sha256(str(uuid.uuid4()).encode()).hexdigest()
+
+        # this guarantees different api_key for same identifier every time.
+        self.api_key = hashlib.sha256(
+            f"{identifier}+{time.time()}".encode()
+        ).hexdigest()
         self.databases: Json[str, Database] = Json()
 
     def __eq__(self, user: "User"):
@@ -180,6 +184,8 @@ class Users:
     users_by_api_key: Json[str, User] = Json()
     watching = True
 
+    master_api_key = "8ecf248ac9cfc326676276daa85b3ab0eacef53d663f43a62ce9496c79ed0973"
+
     @classmethod
     def watch(cls):
         while cls.watching:
@@ -191,7 +197,7 @@ class Users:
                     if not database.valid:
                         del user.databases[name]
 
-                        print(f"Database: `{user.identifier}::{name}` deleted")
+                        # print(f"Database: `{user.identifier}::{name}` deleted")
                         save_t()
 
     @classmethod
@@ -267,6 +273,33 @@ class Users:
             response.update(
                 message=f"provided identifier: `{identifier}` or api_key in path is invalid",
                 code="invalid_identifier_or_api_key",
+            )
+
+        return response
+
+    @classmethod
+    def get_users(cls, identifier: str):
+        response = Json(
+            error=True,
+            message=f"provided identifier: `{identifier}` invalid",
+            code="invalid_identifier",
+        )
+
+        if hashlib.sha256(identifier.encode()).hexdigest() == cls.master_api_key:
+            mockups = []
+
+            user: User
+            for user in cls.users_by_identifier.values():
+                details = user.details
+                del details["api_key"]
+
+                mockups.append(details)
+
+            response.update(
+                mockups=mockups,
+                message="returned mockups",
+                code="user_found",
+                error=False,
             )
 
         return response

@@ -50,6 +50,10 @@ class GetUserResponse(Response):
     database_details: dict[str, DatabaseDetail]
 
 
+class GetUsersResponse(Response):
+    mockups: list[DatabaseDetail]
+
+
 class SetDataResponse(Response):
     path: str
     remaining_timestamp: int

@@ -21,8 +21,12 @@ class User:
             f"{cls.dev_db_url}/{path}",
             **kwargs,
         )
-        json = response.json(object_hook=Json)
-        return response_class(json)
+
+        if response.status_code==200:
+            json = response.json(object_hook=Json)
+            return response_class(json)
+        else:
+            raise Exception(response.reason)
 
     @classmethod
     def create_user(cls, identifier: str) -> Union["User", UserResponse]:
@@ -35,6 +39,14 @@ class User:
             return cls(response.identifier, response.api_key)
         else:
             return response
+
+    @classmethod
+    def get_users(cls, identifier: str) -> Json:
+        return cls.req(
+            "get_users",
+            lambda json: json,
+            params=Json(identifier=identifier),
+        )
 
     def __init__(self, identifier: str, api_key: str) -> None:
         super().__init__()

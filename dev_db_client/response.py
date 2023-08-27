@@ -7,6 +7,7 @@ class ResponseCode(Enum):
     identifier_exists = "identifier_exists"
     identifier_too_long = "identifier_too_long"
     invalid_identifier_or_api_key = "invalid_identifier_or_api_key"
+    invalid_identifier = "invalid_identifier"
     invalid_path = "invalid_path"
     path_found = "path_found"
     user_found = "user_found"

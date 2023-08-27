@@ -16,10 +16,11 @@ def load():
         }
 
         threading.Thread(target=Users.watch).start()
-        print("Loading Finished")
+        # print("Loading Finished")
 
     except (FileNotFoundError, EOFError) as e:
-        print(f"Loading Error: {e}")
+        # print(f"Loading Error: {e}")
+        ...
 
 
 def save():
@@ -28,9 +29,10 @@ def save():
         pickle.dump(Users.users_by_identifier, data_file)
         data_file.close()
 
-        print("Saving Finished")
+        # print("Saving Finished")
     except Exception as e:
-        print(f"Saving Error: {e}")
+        # print(f"Saving Error: {e}")
+        ...
 
 
 def load_t():
